@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import YourBotArmy from "./YourBotArmy";
 import BotCollection from "./BotCollection";
-import BotSpecs from ".BotSpecs"
+import BotSpecs from "./BotSpecs";
 
 function BotsPage() {
   //start here with your code for step one
   const [bots, setBots]= useState([]);
   const [selectedBot, setSelectBot] = useState(null);
   const [botsArmy, setBotsArmy]= useState([]);
-
-
 
 useEffect(() =>{
   fetchBots();
@@ -25,28 +23,29 @@ const fetchBots = async() =>{
 };
 
 const selectBot = (bot) =>{
-  const addToArmy = bots.filter((bot)=> bot.id === bot.id);
-  // const botIsAvailable = botsArmy. filter.find((bot) =>  bot.id === bot.id);
-
-  setSelectBot(addToArmy[0]);
+  const addToArmy = bots.find((bort)=> bort.id === bot.id);
+  if (addToArmy){
+     setSelectBot(
+      botsArmy.filter((bort) => bort.id === bot.id)
+     )}
 
 }
 
 const enlistBot = (bot) =>{
-  const addToArmy = bots.filter((bot)=> bot.id === bot.id);
-  const botIsAvailable = botsArmy. filter.find((bot) =>  bot.id === bot.id);
+  const addToArmy = bots.find((bort) =>bort.id ===bot.id);
+  const botIsAvailable = botsArmy.filter((bort) => bort.id === bot.id);
   if(!botIsAvailable){
     setBotsArmy([...botsArmy, addToArmy([0])]);
   };
 }
 
-const removeBotPermanently = async(bot) =>{
+const removeBotFromArmy = async(bot) =>{
   try {
 			const res = await fetch(`http://localhost:8002/bots/${bot}`, {
 				method: "DELETE",
 			});
-			const removeBotPermanently = botsArmy.filter((bot) => bot.id !== bot);
-			setBotsArmy(removeBotPermanently);
+			const removeBotFromArmy = botsArmy.filter((bort) => bort.id !== bot);
+			setBotsArmy(removeBotFromArmy);
 		} catch (error) {
 			console.log(error);
 		}
@@ -59,10 +58,11 @@ const resetSelectedBot = () => {
 
   return (
     <div>
-      <YourBotArmy army={botsArmy} removeBotPermanently={removeBotPermanently} selectBot={selectBot} />
+      <YourBotArmy army={botsArmy} removeBotFromArmy={removeBotFromArmy} selectBot={selectBot} />
       {!selectedBot && <BotCollection bots={bots} selectBot={selectBot} />}
       {selectedBot && (
-				<BotSpecs enlistBot={enlistBot} resetSelectedBot={resetSelectedBot} bot={selectedBot} />)}
+				<BotSpecs enlistBot={enlistBot} resetSelectedBot={resetSelectedBot} bot={selectedBot} />
+        )}
     </div>
   );
 }

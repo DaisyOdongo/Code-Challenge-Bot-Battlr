@@ -6,7 +6,7 @@ function BotCollection([bots, selectBot]) {
     <div className="ui four column grid">
       <div className="row">
         {bots.map((bot)=> (
-        <BotCard key= {bot.id} bot={bot} onSelectBot ={selectBot} />
+        <BotCard key= {bot.id} bot={bot} onSelectBot={selectBot} />
         ))}
         Collection of all bots
       </div>

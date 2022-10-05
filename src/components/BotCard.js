@@ -9,7 +9,7 @@ const botTypeClasses = {
   Captain: "icon star",
 };
 
-function BotCard({ bot, onSelectBot}) {
+function BotCard({ bot, removeBotFromArmy, onSelectBot}) {
   return (
     <div className="ui column">
       <div
@@ -22,7 +22,7 @@ function BotCard({ bot, onSelectBot}) {
         </div>
         <div className="content">
           <div className="header">
-            {props.bot.name}
+            {bot.name}
             <i className={botTypeClasses[bot.bot_class]} />
           </div>
           <div className="meta text-wrap">
@@ -48,7 +48,7 @@ function BotCard({ bot, onSelectBot}) {
               <button
                 className="ui mini red button"
                 onClick={() =>
-                  removeBotPermanently(bot.id)}
+                  removeBotFromArmy(bot.id)}
               >
                 x
               </button>

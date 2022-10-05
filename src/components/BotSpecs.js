@@ -64,6 +64,5 @@ function BotSpecs({ bot, resetSelectedBot, enlistBot }) {
 			</div>
 		</div>
 	);
-}
-
+	}
 export default BotSpecs;
