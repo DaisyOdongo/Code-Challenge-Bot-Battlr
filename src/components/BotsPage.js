@@ -9,40 +9,35 @@ function BotsPage() {
   const [selectedBot, setSelectBot] = useState(null);
   const [botsArmy, setBotsArmy]= useState([]);
 
-useEffect(() =>{
-  fetchBots();
-}, [botsArmy]);
-const fetchBots = async() =>{
-  try{
-    const res = await fetch("http://localhost:8002/bots");
-    const data = await res.json();
-    setBots(data);
-  }catch (err) {
-    console.log(err);
-  }  
-};
+useEffect(() => {
+    fetch("http://localhost:8002/bots")
+    .then((res) => res.json())
+    .then((bots) => {
+      setBots(bots)
+    })
+  }, [selectedBot])
+
 
 const selectBot = (bot) =>{
-  const addToArmy = bots.find((bort)=> bort.id === bot.id);
-  if (addToArmy){
-     setSelectBot(
-      botsArmy.filter((bort) => bort.id === bot.id)
-     )}
+  const addToArmy = bots.filter((bort)=> bort.id === bot.id);
+  const botIsAvailable = botsArmy.find((bort) => bort.id === bot.id);
+     
+  setSelectBot(addToArmy[0]);
 
-}
+};
 
 const enlistBot = (bot) =>{
   const addToArmy = bots.find((bort) =>bort.id ===bot.id);
   const botIsAvailable = botsArmy.filter((bort) => bort.id === bot.id);
   if(!botIsAvailable){
-    setBotsArmy([...botsArmy, addToArmy([0])]);
-  };
-}
+          setBotsArmy([...botsArmy, addToArmy[0]]);
+  }
+};
 
 const removeBotFromArmy = async(bot) =>{
   try {
-			const res = await fetch(`http://localhost:8002/bots/${bot}`, {
-				method: "DELETE",
+			  const res = await fetch(`http://localhost:8002/bots/${bot}`, {
+				      method: "DELETE",
 			});
 			const removeBotFromArmy = botsArmy.filter((bort) => bort.id !== bot);
 			setBotsArmy(removeBotFromArmy);
